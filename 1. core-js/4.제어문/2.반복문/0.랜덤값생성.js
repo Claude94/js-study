@@ -19,5 +19,5 @@ console.log("========================");
 // 0이상 10이하의 랜덤 정수 만들기
 var ri = (Math.floor(Math.random())*10)+1;
 console.log(`랜덤정수 : ${ri}`);
-랜덤 정수 공식 : x이상 y이하의 랜덤 정수 생성
--(Math.floor(Math.random() * (y -x +1)) +x;
+// 랜덤 정수 공식 : x이상 y이하의 랜덤 정수 생성
+Math.floor(Math.random() * (y -x +1)) +x;
