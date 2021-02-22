@@ -11,7 +11,7 @@ while (true) {
         alert(`${questions}은 정답입니다.`);
     } else if (questions !== answer) {
         alert(`${questions}은 정답이 아닙니다.`);
-        while (onemore < 3) {
+        while (onemore < 3 || ) {
             var questions2 = +prompt(`${onemorenum1} + ${onemorenum2} = 정답을 입력하세요. : `);
             onemore++;
             count--;
