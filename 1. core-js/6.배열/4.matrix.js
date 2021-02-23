@@ -40,3 +40,7 @@ for (var studentScore of ourStudentScores) {
 }
 // 반 평균
 var classAverage = ourAverages / ourStudentScores.length;
+console.log(`우리반 평균 ${classAverage}`);
+
+//국어 평균
+
