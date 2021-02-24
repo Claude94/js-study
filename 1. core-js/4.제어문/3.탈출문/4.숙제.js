@@ -41,18 +41,19 @@ while (true) {
         var rvg = +prompt("재도전 하겠습니까? (원한다면 : 1 아니라면 : 아무숫자) 를 누르세요.");
         //재시도 유무 결정
         if (rvg === 1) { //재시도 3회 설정
-            var rvgoscore = 0;
-            var userasr = +prompt(`재시도 : ${num1} ${operator} ${num2} = ???`);
-            alert("3번의 기회가 있습니다");
-            for (var count = 3; count < 1; count--) {
-                if (userasr === trueasr) {
-                    alert(`${userasr}는 정답입니다.`);
+            var rvgoscore = 0, count = 3;
+             var rvgasr= +prompt(`${count}차 재시도 : ${num1} ${operator} ${num2} = ???`);
+            alert(`${count}번의 기회가 있습니다`);
+            for (var count = 3; count > 0; count--) {
+                if (rvdasr === trueasr) {
+                    alert(`${rvgasr}는 정답입니다.`);
                     rvgoscore++;
-                } else if (userasr === 0) {
+                    break;
+                } else if (rvgasr === 0) {
                     alert("시험을 종료합니다");
                     break;
                 } else {
-                    alert(`${userasr}는 정답이 아닙니다.`);
+                    alert(`${rvgasr}는 정답이 아닙니다.`);
                     alert(`${count}의 기회가 남았습니다`);
                 }
             }
