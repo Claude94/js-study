@@ -39,6 +39,7 @@ function factorial(n) {
 }
 
 //중첨 함수
+// inner는 outer안에서 밖에 호출 할 수 있다.
 function outer() {
     var x = 1;
 
@@ -51,3 +52,5 @@ function outer() {
 }
 
 outer();
+
+//콜백 함수
