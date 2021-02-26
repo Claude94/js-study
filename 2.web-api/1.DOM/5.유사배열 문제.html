@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .red {
+        color: red;
+    }
+
+    .blue {
+        color: blue;
+    }
+</style>
+
+<body>
+    <ul id="fruits">
+        <li class="red">apple</li>
+        <li class="red">banana</li>
+        <li class="red">grape</li>
+        <li class="red">peach</li>
+    </ul>
+
+    <script>
+        //유사배열 NodeList 리던
+        // const $elements = document.querySelectorAll('.red');
+        const $elements = document.getElementsByClassName('red');
+        console.log($elements);
+
+        //유사배열을 배열처럼 제어할 때는 순수 배열로 변경해서 쓰시오
+        const realArray = Array.from($elements);
+        console.log(realArray);
+        console.log(...$elements);//ES6
+        for (let i = 0; i < realArray.length; i++) {
+            realArray[i].className = ' blue';
+        }
+    </script>
+
+</body>
+
+</html>
