@@ -20,12 +20,8 @@
     </ul>
 
     <script>
-        const $elem = [...document.querySelectorAll('#list > li')];
-        for (let n = 0; n < $elem.length; i++) {
-            if (i % 2 === 0) {
-                n.style.background = 'yellow';
-            }
-        }
+        const $elem = [...document.querySelectorAll('#list > li:nth-child(even)')];
+        for (let n = 0; n < $elem.length; 
     </script>
 
 </body>

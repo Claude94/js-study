@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {color: red;}
+    </style>
+</head>
+
+<body>
+    <div id="greeting">Hello<span>World</span></div>   
+    <script>
+        //textcontent는 단순 텍스트 변경에 사용한다
+        const $div = document.getElementById('greeting');
+        console.log($div.textContent);
+
+        // $div.textContent = '안녕하세요';
+        // $div.textContent = '<span>안녕</span>하세요';
+        //태그와 함께 변경한다면 innerHTML을 사용한다
+        $div.innerHTML = '<span>안녕</span>하세요';
+        console.log( $div.innerHTML);
+    </script>
+</body>
+
+</html>
