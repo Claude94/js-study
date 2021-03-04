@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .menu ul {
+            display: none;
+            margin: 0;
+            list-style: none;
+        }
+        .menu .title::before {
+            content: '▶';
+            font-size: 80%;
+            cursor: pointer;
+        }
+        .menu ul.open {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="lunches" class="menu">
+        <span class="title">추천 점심 메뉴(클릭)</span>
+        <ul>
+            <li>짜장면</li>
+            <li>돈까스</li>
+            <li>김치찌개</li>
+            <li>제육덮밥</li>
+        </ul>
+    </div>
+
+    <script>
+        const $ul = document.getElementById('.menu ul');
+        const $title = document.getElementById('.title');
+        $title.addEventListener('click', () => {
+            $ul.classList.toggle('open');
+        });
+    </script>
+</body>
+
+</html>
