@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #fruits {
+            display: flex;
+            list-style: none;
+            padding: 20px;
+            border: 1px solid tomato;
+        }
+
+        #frutis li {
+            width: fit-content;
+            cursor: pointer;
+            background: yellow;
+            margin-right: 20px;
+        }
+
+        #fruits .active {
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul id="fruits">
+        <li id="apple" class="active">apple</li>
+        <li id="banana">banana</li>
+        <li id="grape">grape</li>
+    </ul>
+
+    <div>선택된 과일 : <em class="msg">apple</em></div>
+
+    <br>
+
+    # 새로운 과일 추가 : <input type="text" class="textbox">
+                        <button id="add">추가</button>
+    <script>
+        const $fruits = document.getElementById('fruits');
+        const $msg = document.querySelector('.msg');
+
+        //이벤트 헨들러 함수
+        const activate = e => {
+            // $li.classList.add('active');
+            console.log(e.target);
+
+            //이벤트 발생 타겟이 특정 요소인지를 검증
+            if (!e.target.matches('#fruits > li')) {
+                return;
+            }
+            for (let $target of [...$fruits.children]) {
+                // toggle메서드의 두번째 인수로 논리값을 전달할 수 있는데
+                // 해당논리값이 true로 판명나면 지정한 클래스를 추가하며
+                // false로 판명나면 지정한 클래스를 제거합니다
+                $target.classList.toggle('active', $target === e.target);
+            }
+            $msg.textContent = e.target.id;
+        }
+
+        //ul에 이벤트 등록
+        $fruits.addEventListener('click', activate);
+        //동적으로 과일 추가하기
+        const $btn = document.getElementById('add');
+        const $textbox = document.querySelector('.textbox');
+
+        //버튼에 이벤드 등록
+        $btn.addEventListener('click', e => {
+            const $newLi = document.createElement('li');
+            $newLi.textContent = $textbox.value;
+            $newLi.setAttribute('id', textbox.value.toLowerCase());
+            $fruits.appendChild($newLi);
+            $textbox.value = '';
+        });
+    </script>
+
+</body>
+
+</html>
