@@ -24,6 +24,7 @@
             <h1 class="app-title">일정 관리</h1>
             <div class="content">
                 <form class="todo-insert">
+                    <!-- from안에 button은 기본 타입이 submit으로 설정되어있다 -->
                     <input type="text" id="todo-text" placeholder="할일을 입력하세요" autocomplete="off">
                     <button id="add"><span class="lnr lnr-plus-circle"></span></button>
                 </form>
@@ -31,7 +32,7 @@
                     <!-- //버튼을 누르면 ul이 추가된다 -->
                     <li data-id="1" class="todo-list-item">
                         <label class="checkbox">
-                            <input type="checkbox">
+                            <input type="checkbox checked">
                             <!-- 인라인블록 체크박스 -->
                             <span class="text">할 일 1</span>
                         </label>
