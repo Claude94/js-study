@@ -62,16 +62,21 @@ function makeNewToDoNode(newToDo) {
 function insertToDoData() {
 
     const $todoText = document.getElementById('todo-text');
-    
+
+    //필수 입력란이 공백인지 검증
+    //trim(): 문자열의 앞뒤 공백을 제거
     if ($todoText.value.trim() === '') {
         $todoText.style.background = 'orangered';
-        $todoText.setAttribute('placeholder', '필수입력사항입니다');
+        $todoText.setAttribute('placeholder', '필수 입력사항입니다!');
         $todoText.value = '';
         return;
     } else {
-        $todoText.setAttribute('placeholder','할 일을 입력하세요');
-        $todoText.removeAttribute('style');
+        $todoText.setAttribute('placeholder', '할 일을 입력하세요.');
+        // $todoText.removeAttribute('style');
+        $todoText.style.background = '';
     }
+
+
     //1. todos배열에 객체를 생성 한 후 push
     const newToDo = {
         id: makeNewId(),
@@ -104,21 +109,21 @@ function changeCheckState($label) {
 
     //1. 체크가 된 곳의 label태그에 checked클래스를 추가해야 함.
     //2. label노드를 얻어야 한다. 근데 그냥 label이 아니라 그 체크된
-    //  체크박스의 부모 라벨이어야 함. 이벤트 핸들러한테 받아오자
+    //   체크박스의 부모 라벨이어야 함. 이벤트 핸들러한테 받아오자
     //3. 그 label에 클래스를 추가해보자
     $label.classList.toggle('checked');
 
     //4. 실제로 서버가 있었다면 서버에도 완료 상태를 반영해야 함
-    //  todos배열의 할일 객체의 done값을 바꿔줘야 함.
+    //   todos배열의 할일 객체의 done값을 바꿔줘야 함.
     //5. 이 함수에서 알고 있는 정보는 클릭된 체크박스의 label을 알고 있음.
     //6. 그런데 우리가 배열에서 특정 객체를 꺼낼려면 id 프로퍼티값을 알아야함.
     //7. label을 알고 있다면 그 부모태그 li에 접근할 수 있고 그 곳의 data-id를
-    //  조회하면 객체 id값을 얻어낼 수 있음
+    //   조회하면 객체 id값을 얻어낼 수 있음
     // console.log($label.parentNode.dataset.id);
     const dataId = +$label.parentNode.dataset.id;
 
     //8. dataId를 기반으로 배열을 탐색하여 data-id와 일치하는 id프로퍼티를
-    //  가진 객체의 인덱스를 얻어와야 함.
+    //   가진 객체의 인덱스를 얻어와야 함.
     const index = findIndexByDataId(dataId);
     //console.log('idx: ', index);
 
@@ -132,9 +137,13 @@ function changeCheckState($label) {
 
 //할 일 삭제 처리 함수 정의
 function removeToDoData($delTarget) {
-    //1. 삭제를 하려면 ul에서 li를 지워야 함.
+    //1. 삭제를 하려면 ul에서 li를 지워야 함. 
     //2. 지우려면 ul노드랑 삭제대상 li의 노드를 받아야 함.
-    document.querySelector('.todo-list').removeChild($delTarget);
+    $delTarget.classList.add('delMoving');
+
+    setTimeout(() => {
+        document.querySelector('.todo-list').removeChild($delTarget);
+    }, 1400);
 
     const index = findIndexByDataId(+$delTarget.dataset.id);
     if (index != null) {
@@ -164,17 +173,25 @@ function enterModifyMode($modSpan) {
 }
 
 //수정 완료 이벤트 처리 함수 정의
-function modifyToDoData($modSpan) {
+function modifyToDoData($modCompleteSpan) {
 
     //버튼을 원래대로 돌림 (lnr-checkmark-circle -> lnr-undo)
-    $modSpan.classList.replace('lnr-checkmark-circle', 'lnr-undo');
+    $modCompleteSpan.classList.replace('lnr-checkmark-circle', 'lnr-undo');
     //input을 다시 span.text로 변경
-
-    const $label = $modSpan.parentNode.previousElementSibling
+    const $label = $modCompleteSpan.parentNode.previousElementSibling;
     const $modInput = $label.lastElementChild;
-    $label.replaceChild($textSpan, $modSpan);
-    //배열 데이터 수정
 
+    const $textSpan = document.createElement('span');
+    $textSpan.classList.add('text');
+    $textSpan.textContent = $modInput.value;
+
+    $label.replaceChild($textSpan, $modInput);
+
+    //배열 데이터 수정
+    const index = findIndexByDataId(+$label.parentNode.dataset.id);
+    if (index != null) {
+        todos[index].text = $textSpan.textContent;
+    }
 }
 
 
@@ -217,7 +234,7 @@ function modifyToDoData($modSpan) {
         // console.log(e.target.parentNode.parentNode);
 
         // if (confirm('진짜 삭제합니까?')) {
-            removeToDoData(e.target.parentNode.parentNode);
+        removeToDoData(e.target.parentNode.parentNode);
         // }
     });
 

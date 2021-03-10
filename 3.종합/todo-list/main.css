@@ -11,18 +11,41 @@ button {
     border: none;
 }
 
+/* delete animation */
+.delMoving {
+    animation: delMove 1.5s ease-in-out;
+}
+
+@keyframes delMove {
+    0% {
+        background: orange;
+        transform: translateX(20px);
+    }
+
+    50% {
+        background: orangered;
+        transform: translate(-500px);
+    }
+
+    100% {
+        background: red;
+        transform: translate(-2000px);
+    }
+}
+
 /* layout */
 .wrapper {
     background: #e9ecef;
+    padding: 6rem 0;
     height: 100vh;
 }
 
 section.todo-template {
     width: 512px;
     margin: 0 auto;
-    padding: 6rem 0;
     border-radius: 5px;
     overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 section.todo-template .app-title {
@@ -45,41 +68,36 @@ section.todo-template .content .todo-insert {
 }
 
 section.todo-template .content .todo-insert input {
-    /* flex를 1을 주면 반대편의 최소 자리값을 제외한 나머지를 차지한다 */
     flex: 1;
-    padding: 1.5rem;
-    font-size: 1.124rem;
-    line-height: 1.5rem;
+    padding: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
     color: #fff;
-    /* background: tomato; */
 }
 
 section.todo-template .content .todo-insert input::placeholder {
-    color: #dee2d6;
+    color: #dee2e6;
 }
 
 section.todo-template .content .todo-insert button {
-    /* background: red; */
     background: #868e96;
     color: #fff;
     padding: 0 1rem;
     font-size: 1.3rem;
     cursor: pointer;
     display: flex;
-    justify-content: cneter;
+    justify-content: center;
     align-items: center;
 }
 
 section.todo-template .content .todo-insert button:hover {
     background: #adb5bd;
-
 }
 
 section.todo-template .content .todo-list {
     min-height: 320px;
     max-height: 520px;
     overflow: auto;
-
 }
 
 section.todo-template .content .todo-list .todo-list-item {
@@ -89,7 +107,7 @@ section.todo-template .content .todo-list .todo-list-item {
 }
 
 section.todo-template .content .todo-list .todo-list-item:nth-child(even) {
-    background: #f8f8fa;
+    background: #f8f9fa;
 }
 
 section.todo-template .content .todo-list .todo-list-item .checkbox {
@@ -103,9 +121,9 @@ section.todo-template .content .todo-list .todo-list-item .checkbox.checked {
     text-decoration: line-through;
 }
 
-section.todo-template .content .todo-list .todo-list-item .checkbox .input {
+
+section.todo-template .content .todo-list .todo-list-item .checkbox input {
     transform: scale(1.5);
-    /* 체크박스틑 트렌스폼 scale로 키운다 */
 }
 
 section.todo-template .content .todo-list .todo-list-item .checkbox .text {
@@ -117,6 +135,10 @@ section.todo-template .content .todo-list .todo-list-item .checkbox .mod-input {
     margin-left: 4rem;
     border: 1px solid lightgray;
     border-radius: 5px;
+    width: 200px;
+    padding: 4px;
+    box-sizing: border-box;
+    font-size: 12px;
 }
 
 section.todo-template .content .todo-list .todo-list-item div[class] {
@@ -124,13 +146,11 @@ section.todo-template .content .todo-list .todo-list-item div[class] {
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 section.todo-template .content .todo-list .todo-list-item .modify {
     color: green;
     margin-right: 0.6rem;
-
 }
 
 section.todo-template .content .todo-list .todo-list-item .remove {
