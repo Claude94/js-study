@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>시험 점수 등록</h1>
+    <div>
+        <label>
+            # 이름 : <input type="text" name="name">
+        </label>
+        <br>
+        <label>
+            # 국어 : <input type="text" name="kor">
+        </label>
+        <br>
+        <label>
+            # 수학 : <input type="text" name="eng">
+        </label>
+        <br>
+        <label>
+            # 영어 : <input type="text" name="math">
+        </label>
+        <br>
+        <button id="submit">확인</button>
+        <ul class="content"></ul>
+    </div>
+
+    <script>
+        getList();
+        function getList() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://127.0.0.1:8181//api/score');
+            xhr.send();
+            console.log(xhr);
+            xhr.onload = e => {
+                if (xhr.status === 200) {
+                    console.log(xhr.response);
+                    makeResultData(xhr.response);
+                } else {
+                    console.error('통신 실패!');
+                }
+            };
+        }
+
+        function removeAll() {
+
+        }
+        const $ul = document.querySelector('.content');
+
+        function removeAll($ul) {
+            for (let $li of [...$ul.children]) {
+                $ul.removeChild($li);
+            }
+        }
+ 
+        function makeResultData(articles) {
+            removeAll($ul);
+            /*
+            서버가 응답한 데이터는 javascript객체가 아니라
+            json포맷의 데이터입니다.
+            따라서 자바스크립트 문법을 사용할 수 없습니다.
+            json을 자바스크립트로 변환해서 써야합니다.
+            # json -> javascript : JSON.parse()
+            javascript -> json : JSON.stringify()
+            */
+            //JSON을 JS객체로 변환
+            const articleList = JSON.parse(articles);
+            //const firstArticle = articleList[0];
+
+            //console.log('첫번째 게시물: ', firstArticle);
+
+            
+
+            for (let board of articleList) {
+                const {
+                    name,
+                    kor,
+                    eng,
+                    math,
+                    total,
+                    average
+                } = board;
+                const $li = document.createElement('li');
+                $li.textContent = `# 이름: ${name}, 국어: ${kor}, 영어: ${eng}, 수학: ${math}, 총점: ${total}, 평균: ${average}`;
+                $li.innerHTML += '<button id="del-btn">삭제</button>';
+                $ul.appendChild($li);
+            }
+        }
+        document.getElementById('submit').onclick = e => {
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://127.0.0.1:8181/api/score');
+
+            //post요청은 서버로 전송할 데이터가 필요하다
+            //현재 비동기요청이므로 서버로 보내는 데이터의 형식도 당연히 JSON이어야 함
+            const newData = {
+                name: document.querySelector('input[name=name').value,
+                kor: document.querySelector('input[name=kor').value,
+                eng: document.querySelector('input[name=eng').value,
+                math: document.querySelector('input[name=math').value,
+            };
+
+            //전송할 데이터가 무슨 형태인지를 요청 헤더에 지정
+            xhr.setRequestHeader('content-type', 'application/json');
+
+            // 전송할 데이터를 JSON으로 변환
+            const newJsonData = JSON.stringify(newData);
+
+            //서버에 요청 전송
+            xhr.send(newJsonData);
+
+            xhr.onload = e => {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    alert('입력 성공');
+                    getList();
+                } else {
+                    alert('입력 실패')
+                }
+            };
+        };
+        document.getElementById('del-btn').onclick = e => {
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+            const stuNum = document.querySelector('[stuNum]').value;
+            xhr.open('DELETE', 'http://127.0.0.1:8181/api/score/' + stuNum);
+            xhr.send();
+
+            xhr.onload = e => {
+                if (xhr.status === 200) {
+                    console.log(xhr.response);
+                    alert("삭제 성공");
+                } else {
+                    alert("삭제 실패");
+                }
+            };
+        };
+    </script>
+
+</body>
+
+</html>
